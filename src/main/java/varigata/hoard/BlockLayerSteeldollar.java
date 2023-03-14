@@ -94,7 +94,7 @@ public class BlockLayerSteeldollar extends BlockLayerBase {
         return 0;
     }
 
-    public void updateTick(World world, int i, int j, int k, Random random) {
+    //public void updateTick(World world, int i, int j, int k, Random random) {
 
-    }
+    //}
 }
