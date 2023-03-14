@@ -48,7 +48,15 @@ public class ItemPileSteeldollar extends Item {
             }
 
             if (!world.isAirBlock(i, j, k)) {
-                return false;
+                if (world.getBlockId(i, j, k) == Hoard.layerSteeldollar.blockID) {
+                    itemstack.consumeItem(entityplayer);
+                    ((BlockLayerSteeldollar)Hoard.layerSteeldollar).accumulate(world, i, j, k );
+
+                    return true;
+                }
+                else {
+                    return false;
+                }
             }
         }
 
