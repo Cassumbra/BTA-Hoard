@@ -5,8 +5,8 @@ import net.minecraft.src.Material;
 
 import java.util.Random;
 
-public class BlockSteelDollar extends Block {
-    public BlockSteelDollar(int i, Material material) {
+public class BlockSteeldollar extends Block {
+    public BlockSteeldollar(int i, Material material) {
         super(i, material);
     }
 
