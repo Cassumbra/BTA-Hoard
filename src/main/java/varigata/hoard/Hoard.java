@@ -12,22 +12,6 @@ public class Hoard implements ModInitializer {
     public static final String MOD_ID = "hoard";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
-    /*
-    // Set up textures because Halplibe is a little silly.
-    public static final int[] sd_tex_x = BlockCoords.nextCoords();
-    static {
-        TextureHelper.addTextureToTerrain(MOD_ID, "steeldollar_tex_x.png", sd_tex_x[0], sd_tex_x[1]);
-    }
-    public static final int[] sd_tex_y = BlockCoords.nextCoords();
-    static {
-        TextureHelper.addTextureToTerrain(MOD_ID, "steeldollar_tex_y.png", sd_tex_y[0], sd_tex_y[1]);
-    }
-    public static final int[] sd_tex_z = BlockCoords.nextCoords();
-    static {
-        TextureHelper.addTextureToTerrain(MOD_ID, "steeldollar_tex_z.png", sd_tex_z[0], sd_tex_z[1]);
-    }
-    */
-
     // Items
     public static final Item pileSteeldollar = ItemHelper.createItem(MOD_ID, new ItemPileSteeldollar(140), "pile.steeldollar", "steeldollar_pile.png");
     public static final Item steeldollar = ItemHelper.createItem(MOD_ID, new Item(141), "steeldollar", "steeldollar.png");

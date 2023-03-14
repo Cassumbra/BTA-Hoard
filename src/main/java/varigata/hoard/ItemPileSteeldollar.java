@@ -15,14 +15,26 @@ public class ItemPileSteeldollar extends Item {
     }
 
     public boolean onItemUse(ItemStack itemstack, EntityPlayer entityplayer, World world, int i, int j, int k, int l, double heightPlaced) {
+        boolean placed = false;
+        // Placing onto top of stack
         if (world.getBlockId(i, j, k) == Hoard.layerSteeldollar.blockID && l == 1) {
-            itemstack.consumeItem(entityplayer);
             ((BlockLayerSteeldollar)Hoard.layerSteeldollar).accumulate(world, i, j, k );
 
-            return true;
+            placed = true;
         }
+        // Placing from side of a block
+        else if (world.getBlockId(i, j, k) != Block.layerSnow.blockID) {
 
-        if (world.getBlockId(i, j, k) != Block.layerSnow.blockID) {
+            switch (l){
+                case 0: --j; break;
+                case 1: ++j; break;
+                case 2: --k; break;
+                case 3: ++k; break;
+                case 4: --i; break;
+                case 5: ++i; break;
+            }
+
+            /*
             if (l == 0) {
                 --j;
             }
@@ -46,28 +58,30 @@ public class ItemPileSteeldollar extends Item {
             if (l == 5) {
                 ++i;
             }
+             */
 
             if (!world.isAirBlock(i, j, k)) {
                 if (world.getBlockId(i, j, k) == Hoard.layerSteeldollar.blockID) {
-                    itemstack.consumeItem(entityplayer);
                     ((BlockLayerSteeldollar)Hoard.layerSteeldollar).accumulate(world, i, j, k );
 
-                    return true;
+                    placed = true;
                 }
                 else {
                     return false;
                 }
             }
         }
-
-        if (Hoard.layerSteeldollar.canPlaceBlockAt(world, i, j, k)) {
-            itemstack.consumeItem(entityplayer);
-            // TODO: Add placement sound
-            //world.playSoundEffect((double)((float)i + 0.5F), (double)((float)j + 0.5F), (double)((float)k + 0.5F), Block.wireRedstone.stepSound.func_1145_d(), (Block.wireRedstone.stepSound.getVolume() + 1.0F) / 2.0F, Block.wireRedstone.stepSound.getPitch() * 0.8F);
+        if (!placed && Hoard.layerSteeldollar.canPlaceBlockAt(world, i, j, k)) {
             world.setBlockWithNotify(i, j, k, Hoard.layerSteeldollar.blockID);
+            placed = true;
         }
 
-        return true;
+        if (placed) {
+            itemstack.consumeItem(entityplayer);
+            world.playSoundEffect((double)((float)i + 0.5F), (double)((float)j + 0.5F), (double)((float)k + 0.5F), Hoard.layerSteeldollar.stepSound.func_1145_d(), (Hoard.layerSteeldollar.stepSound.getVolume() + 1.0F) / 2.0F, Hoard.layerSteeldollar.stepSound.getPitch() * 0.8F);
+        }
+
+        return placed;
 
     }
 }
