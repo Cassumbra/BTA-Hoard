@@ -30,7 +30,9 @@ public class BlockLayerSteeldollar extends BlockLayerBase {
     public AxisAlignedBB getCollisionBoundingBoxFromPool(World world, int i, int j, int k) {
         int l = world.getBlockMetadata(i, j, k) & 7;
         float f = (float)(2 * (1 + l)) / 16.0F;
-        return AxisAlignedBB.getBoundingBoxFromPool((double)i + this.minX, (double)j + this.minY, (double)k + this.minZ, (double)i + this.maxX, (double)((float)j + f - 0.125F), (double)k + this.maxZ);
+        //return AxisAlignedBB.getBoundingBoxFromPool((double)i + this.minX, (double)j + this.minY, (double)k + this.minZ, (double)i + this.maxX, (double)((float)j + f - 0.125F), (double)k + this.maxZ);
+        return AxisAlignedBB.getBoundingBoxFromPool((double)i + this.minX, (double)j + this.minY, (double)k + this.minZ,
+                (double)i + this.maxX, (double)((float)j + f), (double)k + this.maxZ);
     }
 
     public void accumulate(World world, int x, int y, int z) {

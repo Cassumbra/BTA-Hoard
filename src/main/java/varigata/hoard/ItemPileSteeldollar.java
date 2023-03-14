@@ -34,32 +34,6 @@ public class ItemPileSteeldollar extends Item {
                 case 5: ++i; break;
             }
 
-            /*
-            if (l == 0) {
-                --j;
-            }
-
-            if (l == 1) {
-                ++j;
-            }
-
-            if (l == 2) {
-                --k;
-            }
-
-            if (l == 3) {
-                ++k;
-            }
-
-            if (l == 4) {
-                --i;
-            }
-
-            if (l == 5) {
-                ++i;
-            }
-             */
-
             if (!world.isAirBlock(i, j, k)) {
                 if (world.getBlockId(i, j, k) == Hoard.layerSteeldollar.blockID) {
                     ((BlockLayerSteeldollar)Hoard.layerSteeldollar).accumulate(world, i, j, k );
@@ -82,6 +56,5 @@ public class ItemPileSteeldollar extends Item {
         }
 
         return placed;
-
     }
 }
