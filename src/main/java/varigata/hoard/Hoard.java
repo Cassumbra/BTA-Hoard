@@ -8,9 +8,11 @@ import turniplabs.halplibe.helper.*;
 
 
 public class Hoard implements ModInitializer {
+
     public static final String MOD_ID = "hoard";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
+    /*
     // Set up textures because Halplibe is a little silly.
     public static final int[] sd_tex_x = BlockCoords.nextCoords();
     static {
@@ -24,19 +26,19 @@ public class Hoard implements ModInitializer {
     static {
         TextureHelper.addTextureToTerrain(MOD_ID, "steeldollar_tex_z.png", sd_tex_z[0], sd_tex_z[1]);
     }
-
+    */
 
     // Items
     public static final Item pileSteeldollar = ItemHelper.createItem(MOD_ID, new ItemPileSteeldollar(140), "pile.steeldollar", "steeldollar_pile.png");
     public static final Item steeldollar = ItemHelper.createItem(MOD_ID, new Item(141), "steeldollar", "steeldollar.png");
 
     public static final Block steeldollarBlock = BlockHelper.createBlock(MOD_ID, new BlockSteeldollar(900, Material.sand), "block.steeldollar",
-            sd_tex_y[0], sd_tex_y[1], sd_tex_y[0], sd_tex_y[1],sd_tex_x[0], sd_tex_x[1], sd_tex_z[0], sd_tex_z[1], sd_tex_x[0], sd_tex_x[1], sd_tex_z[0], sd_tex_z[1],
+            "steeldollar_tex_y.png", "steeldollar_tex_y.png", "steeldollar_tex_x.png", "steeldollar_tex_z.png", "steeldollar_tex_x.png", "steeldollar_tex_z.png",
             Block.soundMetalFootstep, 3.0F, 5.0F, 0);
 
     // Blocks
     public static final Block layerSteeldollar = BlockHelper.createBlock(MOD_ID, new BlockLayerSteeldollar(901, Material.sand), "layer.steeldollar",
-            sd_tex_y[0], sd_tex_y[1], sd_tex_y[0], sd_tex_y[1],sd_tex_x[0], sd_tex_x[1], sd_tex_z[0], sd_tex_z[1], sd_tex_x[0], sd_tex_x[1], sd_tex_z[0], sd_tex_z[1],
+            "steeldollar_tex_y.png", "steeldollar_tex_y.png", "steeldollar_tex_x.png", "steeldollar_tex_z.png", "steeldollar_tex_x.png", "steeldollar_tex_z.png",
             Block.soundMetalFootstep, 3.0F, 5.0F, 0).setNotInCreativeMenu();
 
     static {

@@ -4,7 +4,7 @@
   "version": "${version}",
 
   "name": "Hoard",
-  "description": "This mod aims to help new BTA modders.",
+  "description": "Put your wealth into a bunch of messy piles all over the floor.",
   "authors": [
     "Varigata System"
   ],
