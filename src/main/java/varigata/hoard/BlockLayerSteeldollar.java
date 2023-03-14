@@ -74,24 +74,25 @@ public class BlockLayerSteeldollar extends BlockLayerBase {
         }
     }
 
-    public void harvestBlock(World world, EntityPlayer entityplayer, int i, int j, int k, int l) {
-        super.harvestBlock(world, entityplayer, i, j, k, l);
-        int i1 = Item.ammoSnowball.itemID;
-        float f = 0.7F;
-        double d = (double)(world.rand.nextFloat() * f) + (double)(1.0F - f) * 0.5;
-        double d1 = (double)(world.rand.nextFloat() * f) + (double)(1.0F - f) * 0.5;
-        double d2 = (double)(world.rand.nextFloat() * f) + (double)(1.0F - f) * 0.5;
-        EntityItem entityitem = new EntityItem(world, (double)i + d, (double)j + d1, (double)k + d2, new ItemStack(i1, 1, 0));
-        entityitem.delayBeforeCanPickup = 10;
-        world.entityJoinedWorld(entityitem);
-    }
+    //public void harvestBlock(World world, EntityPlayer entityplayer, int i, int j, int k, int l) {
+    //    super.harvestBlock(world, entityplayer, i, j, k, l);
+    //    int i1 = Hoard.pileSteeldollar.itemID;
+    //    float f = 0.7F;
+    //    double d = (double)(world.rand.nextFloat() * f) + (double)(1.0F - f) * 0.5;
+    //    double d1 = (double)(world.rand.nextFloat() * f) + (double)(1.0F - f) * 0.5;
+    //    double d2 = (double)(world.rand.nextFloat() * f) + (double)(1.0F - f) * 0.5;
+    //    EntityItem entityitem = new EntityItem(world, (double)i + d, (double)j + d1, (double)k + d2, new ItemStack(i1, world.getBlockMetadata(i, j, k), 0));
+    //    entityitem.delayBeforeCanPickup = 10;
+    //    world.entityJoinedWorld(entityitem);
+    //}
 
     public int idDropped(int i, Random random) {
-        return Item.ammoSnowball.itemID;
+        return Hoard.pileSteeldollar.itemID;
     }
 
     public int quantityDropped(int metadata, Random random) {
-        return 0;
+        //return 0;
+        return metadata + 1;
     }
 
     //public void updateTick(World world, int i, int j, int k, Random random) {

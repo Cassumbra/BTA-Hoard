@@ -18,15 +18,20 @@ public class Hoard implements ModInitializer {
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
     public static final Item pileSteeldollar = (new ItemPileSteeldollar(140)).setIconCoord(8, 3).setItemName("pile.steeldollar");
-    public static final Block steeldollarBlock = BlockHelper.createBlock(MOD_ID, new Block(900, Material.sand), "steeldollar", "steeldollar_block_topbottom.png", "steeldollar_block_topbottom.png", "steeldollar_block_sides.png", "steeldollar_block_sides_2.png", "steeldollar_block_sides.png", "steeldollar_block_sides_2.png", Block.soundGravelFootstep, 0.1f, 0.1f, 0.0f);
-    //public static final Block layerSteeldollar = (new BlockLayerSteeldollar(901, Material.sand)).setBlockName("layer.steeldollar").setTexCoords(2, 4).setPlaceOverwrites();//.setIsLitInteriorSurface(true);
-    public static final Block layerSteeldollar = new BlockLayerSteeldollar(901, Material.sand).setBlockName("layer.steeldollar").setPlaceOverwrites();//.setNotInCreativeMenu();
+    //public static final Block steeldollarBlock = BlockHelper.createBlock(MOD_ID, new Block(900, Material.sand), "steeldollar", "steeldollar_block_topbottom.png", "steeldollar_block_topbottom.png", "steeldollar_block_sides.png", "steeldollar_block_sides_2.png", "steeldollar_block_sides.png", "steeldollar_block_sides_2.png", Block.soundGravelFootstep, 0.1f, 0.1f, 0.0f);
+    public static final Block steeldollarBlock = new BlockSteelDollar(900, Material.sand).setBlockName("block.steeldollar");
+    public static final Block layerSteeldollar = new BlockLayerSteeldollar(901, Material.sand).setBlockName("layer.steeldollar").setNotInCreativeMenu();
 
 
 
     static {
-        ((BlockAccessor) layerSteeldollar).callSetHardness(0.1f);
-        ((BlockAccessor) layerSteeldollar).callSetStepSound(Block.soundGravelFootstep);
+        ((BlockAccessor) steeldollarBlock).callSetHardness(3.0f);
+        ((BlockAccessor) steeldollarBlock).callSetResistance(5.0f);
+        ((BlockAccessor) steeldollarBlock).callSetStepSound(Block.soundMetalFootstep);
+
+        ((BlockAccessor) layerSteeldollar).callSetHardness(3.0f);
+        ((BlockAccessor) steeldollarBlock).callSetResistance(5.0f);
+        ((BlockAccessor) layerSteeldollar).callSetStepSound(Block.soundMetalFootstep);
         ((BlockLayerBase) layerSteeldollar).setFullBlockID(steeldollarBlock.blockID);
     }
 
@@ -35,8 +40,11 @@ public class Hoard implements ModInitializer {
     @Override
     public void onInitialize() {
         LOGGER.info("Hoard initialized.");
-        //Item.itemsList[pileSteeldollar.itemID] = pileSteeldollar;
+        Item.itemsList[steeldollarBlock.blockID] = new ItemBlock(steeldollarBlock.blockID - Block.blocksList.length);
         Item.itemsList[layerSteeldollar.blockID] = new ItemBlock(layerSteeldollar.blockID - Block.blocksList.length);
+
+        // Recipes
+        //RecipeHelper.Crafting
 
         // Block Textures
         // Steeldollar
@@ -47,7 +55,7 @@ public class Hoard implements ModInitializer {
         int[] sides_2 = BlockCoords.nextCoords();
         TextureHelper.addTextureToTerrain(MOD_ID, "steeldollar_block_sides_2.png", sides_2[0], sides_2[1]);
         layerSteeldollar.setTexCoords(topbottom[0], topbottom[1], topbottom[0], topbottom[1], sides_1[0], sides_1[1], sides_2[0], sides_2[1], sides_1[0], sides_1[1], sides_2[0], sides_2[1]);
-        // TODO: Make full block manually. Set its texture down here.
+        steeldollarBlock.setTexCoords(topbottom[0], topbottom[1], topbottom[0], topbottom[1], sides_1[0], sides_1[1], sides_2[0], sides_2[1], sides_1[0], sides_1[1], sides_2[0], sides_2[1]);
 
         // Item Textures
         // Steeldollar
