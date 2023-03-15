@@ -3,118 +3,65 @@ package varigata.hoard.mixin;
 import net.minecraft.src.*;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
+import org.spongepowered.asm.mixin.Shadow;
 
-import java.util.Random;
+import java.util.List;
 
 @Mixin(value = Entity.class, remap = false)
-public class LayerStepSoundFix {
-    private static int nextEntityID = 0;
-    public int entityId;
-    public double renderDistanceWeight;
-    public boolean preventEntitySpawning;
-    public Entity riddenByEntity;
-    public Entity ridingEntity;
-    public World worldObj;
-    public double prevPosX;
-    public double prevPosY;
-    public double prevPosZ;
-    public double posX;
-    public double posY;
-    public double posZ;
-    public double motionX;
-    public double motionY;
-    public double motionZ;
-    public float rotationYaw;
-    public float rotationPitch;
-    public float prevRotationYaw;
-    public float prevRotationPitch;
-    public final AxisAlignedBB boundingBox = AxisAlignedBB.getBoundingBox(0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
-    public boolean onGround;
-    public boolean isCollidedHorizontally;
-    public boolean isCollidedVertically;
-    public boolean isCollided;
-    public boolean beenAttacked;
-    public boolean hadNicknameSet;
-    public boolean isInWeb;
-    public boolean field_9293_aM;
-    public boolean isDead;
-    public float yOffset;
-    public float width;
-    public float height;
-    public float prevDistanceWalkedModified;
-    public float distanceWalkedModified;
-    protected float fallDistance;
-    private int nextStepDistance;
-    public double lastTickPosX;
-    public double lastTickPosY;
-    public double lastTickPosZ;
-    public float ySize;
-    public float stepHeight;
-    public boolean noClip;
-    public float entityCollisionReduction;
-    protected Random rand;
-    public int ticksExisted;
-    public int fireResistance;
-    public int fire;
-    public int maxFire;
-    protected int maxAir;
-    protected boolean inWater;
-    public int heartsFlashTime;
-    public int air;
-    private boolean isFirstUpdate;
-    protected boolean isImmuneToFire;
-    protected DataWatcher dataWatcher;
-    public float entityBrightness;
-    private double entityRiderPitchDelta;
-    private double entityRiderYawDelta;
-    public boolean addedToChunk;
-    public int chunkCoordX;
-    public int chunkCoordY;
-    public int chunkCoordZ;
-    public int serverPosX;
-    public int serverPosY;
-    public int serverPosZ;
-    public boolean ignoreFrustumCheck;
-    public boolean isWalking = false;
+public abstract class LayerStepSoundFix{
 
-    public Entity(World world) {
-        this.entityId = nextEntityID++;
-        this.renderDistanceWeight = 1.0;
-        this.preventEntitySpawning = false;
-        this.onGround = false;
-        this.isCollided = false;
-        this.beenAttacked = false;
-        this.field_9293_aM = true;
-        this.isDead = false;
-        this.yOffset = 0.0F;
-        this.width = 0.6F;
-        this.height = 1.8F;
-        this.prevDistanceWalkedModified = 0.0F;
-        this.distanceWalkedModified = 0.0F;
-        this.fallDistance = 0.0F;
-        this.nextStepDistance = 1;
-        this.ySize = 0.0F;
-        this.stepHeight = 0.0F;
-        this.noClip = false;
-        this.entityCollisionReduction = 0.0F;
-        this.rand = new Random();
-        this.ticksExisted = 0;
-        this.fireResistance = 1;
-        this.fire = 0;
-        this.maxAir = 300;
-        this.inWater = false;
-        this.heartsFlashTime = 0;
-        this.air = 300;
-        this.isFirstUpdate = true;
-        this.isImmuneToFire = false;
-        this.dataWatcher = new DataWatcher();
-        this.entityBrightness = 0.0F;
-        this.addedToChunk = false;
-        this.worldObj = world;
-        this.setPosition(0.0, 0.0, 0.0);
-        this.dataWatcher.addObject(0, (byte)0);
-        this.entityInit();
-    }
+    @Shadow
+    public boolean noClip;
+    @Shadow
+    public AxisAlignedBB boundingBox;
+    @Shadow
+    public double posX;
+    @Shadow
+    public double posY;
+    @Shadow
+    public double posZ;
+    @Shadow
+    public double yOffset;
+    @Shadow
+    public double ySize;
+    @Shadow
+    public boolean isInWeb;
+    @Shadow
+    public double motionX;
+    @Shadow
+    public double motionY;
+    @Shadow
+    public double motionZ;
+    @Shadow
+    public boolean onGround;
+    @Shadow
+    public World worldObj;
+    @Shadow
+    public boolean field_9293_aM;
+    @Shadow
+    public float stepHeight;
+    @Shadow
+    public boolean isCollidedHorizontally;
+    @Shadow
+    public boolean isCollidedVertically;
+    @Shadow
+    public boolean isCollided;
+    @Shadow
+    public Object ridingEntity;
+    @Shadow
+    public double distanceWalkedModified;
+    @Shadow
+    public double prevDistanceWalkedModified;
+    @Shadow
+    public boolean isWalking;
+    @Shadow
+    private int nextStepDistance;
+
+
+    @Shadow
+    public abstract boolean isSneaking();
+    //@Shadow
+    //public abstract void updateFallState();
 
     /**
      * @author Varigata
