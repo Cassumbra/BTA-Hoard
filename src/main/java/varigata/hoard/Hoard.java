@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import turniplabs.halplibe.helper.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class Hoard implements ModInitializer {
@@ -46,16 +47,25 @@ public class Hoard implements ModInitializer {
         LOGGER.info("Hoard initialized.");
 
         RecipeHelper.Crafting.createRecipe(pileSteeldollar, 1, new Object[]{"###", "ABA", "###", 'A', Block.blockOlivine, 'B', Block.blockSteel});
-        RecipeHelper.Crafting.createShapelessRecipe(steeldollar, 8, new Object[]{new ItemStack(pileSteeldollar, 1)});
-        RecipeHelper.Crafting.createShapelessRecipe(pileSteeldollar, 8, new Object[]{new ItemStack(steeldollarBlock, 1)});
-        RecipeHelper.Crafting.createShapelessRecipe(pileSteeldollar, 1, new Object[]{new ItemStack(steeldollar, 1), new ItemStack(Hoard.steeldollar, 1), new ItemStack(Hoard.steeldollar, 1), new ItemStack(Hoard.steeldollar, 1), new ItemStack(Hoard.steeldollar, 1), new ItemStack(Hoard.steeldollar, 1), new ItemStack(Hoard.steeldollar, 1), new ItemStack(Hoard.steeldollar, 1)});
-        RecipeHelper.Crafting.createShapelessRecipe(steeldollarBlock, 1, new Object[]{new ItemStack(pileSteeldollar, 1), new ItemStack(Hoard.pileSteeldollar, 1), new ItemStack(Hoard.pileSteeldollar, 1), new ItemStack(Hoard.pileSteeldollar, 1), new ItemStack(Hoard.pileSteeldollar, 1), new ItemStack(Hoard.pileSteeldollar, 1), new ItemStack(Hoard.pileSteeldollar, 1), new ItemStack(Hoard.pileSteeldollar, 1)});
+        generateHoardRecipes(steeldollar, pileSteeldollar, steeldollarBlock);
+        //RecipeHelper.Crafting.createShapelessRecipe(steeldollar, 8, new Object[]{new ItemStack(pileSteeldollar, 1)});
+        //RecipeHelper.Crafting.createShapelessRecipe(pileSteeldollar, 8, new Object[]{new ItemStack(steeldollarBlock, 1)});
+        //RecipeHelper.Crafting.createShapelessRecipe(pileSteeldollar, 1, new Object[]{new ItemStack(steeldollar, 1), new ItemStack(Hoard.steeldollar, 1), new ItemStack(Hoard.steeldollar, 1), new ItemStack(Hoard.steeldollar, 1), new ItemStack(Hoard.steeldollar, 1), new ItemStack(Hoard.steeldollar, 1), new ItemStack(Hoard.steeldollar, 1), new ItemStack(Hoard.steeldollar, 1)});
+        //RecipeHelper.Crafting.createShapelessRecipe(steeldollarBlock, 1, new Object[]{new ItemStack(pileSteeldollar, 1), new ItemStack(Hoard.pileSteeldollar, 1), new ItemStack(Hoard.pileSteeldollar, 1), new ItemStack(Hoard.pileSteeldollar, 1), new ItemStack(Hoard.pileSteeldollar, 1), new ItemStack(Hoard.pileSteeldollar, 1), new ItemStack(Hoard.pileSteeldollar, 1), new ItemStack(Hoard.pileSteeldollar, 1)});
 
     }
 
     // TODO: These might be useful later when we have more hoard types.
-    //public List generateHoardRecipes
-    //public void generateHoardRecipes(Item item, Item pile, Block layer, Block block) {
+    // It might make more sense to do this one manually. -But what if we had a function for automatically setting up properties?
+    //public List generateHoard() {
 
     //}
+    // TODO: Might be good if we could specify conversion rate(s). IE: 2 items = 1 pile
+    public void generateHoardRecipes(Item item, Item pile, Block block) {
+        RecipeHelper.Crafting.createShapelessRecipe(item, 8, new Object[]{new ItemStack(pile, 1)});
+        RecipeHelper.Crafting.createShapelessRecipe(pile, 8, new Object[]{new ItemStack(block, 1)});
+        RecipeHelper.Crafting.createShapelessRecipe(pile, 1, new Object[]{new ItemStack(item, 1), new ItemStack(item, 1), new ItemStack(item, 1), new ItemStack(item, 1), new ItemStack(item, 1), new ItemStack(item, 1), new ItemStack(item, 1), new ItemStack(item, 1)});
+        RecipeHelper.Crafting.createShapelessRecipe(block, 1, new Object[]{new ItemStack(pile, 1), new ItemStack(pile, 1), new ItemStack(pile, 1), new ItemStack(pile, 1), new ItemStack(pile, 1), new ItemStack(pile, 1), new ItemStack(pile, 1), new ItemStack(pile, 1)});
+
+    }
 }
