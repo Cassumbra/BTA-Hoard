@@ -1,0 +1,11 @@
+item.hoard.pile.steeldollar.name=Steeldollar Pile
+item.hoard.pile.steeldollar.desc=A pile of steeldollars. Can be placed in the world.
+item.hoard.steeldollar.name=Steeldollar
+item.hoard.steeldollar.desc=Currency molded from steel and olivine.
+tile.hoard.block.steeldollar.name=Steeldollar Block
+tile.hoard.block.steeldollar.desc=A block of 64 steeldollars.
+tile.hoard.layer.steeldollar.name=Steeldollar Layer
+tile.hoard.layer.steeldollar.desc=You shouldn't have this item.
+
+
+
