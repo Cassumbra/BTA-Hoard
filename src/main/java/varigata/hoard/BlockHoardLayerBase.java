@@ -3,25 +3,23 @@ import net.minecraft.src.AxisAlignedBB;
 import net.minecraft.src.Block;
 import net.minecraft.src.BlockLayerBase;
 import net.minecraft.src.BlockLeavesBase;
-import net.minecraft.src.EntityItem;
-import net.minecraft.src.EntityPlayer;
-import net.minecraft.src.Item;
-import net.minecraft.src.ItemStack;
 import net.minecraft.src.Material;
 import net.minecraft.src.World;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.Random;
 
-import static varigata.hoard.Hoard.MOD_ID;
+
+public class BlockHoardLayerBase extends BlockLayerBase {
 
 
-public class BlockLayerSteeldollar extends BlockLayerBase {
+    public int pileID = -1;
 
-    public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
+    public Block setMaterialID(int materialID) {
+        this.pileID = materialID;
+        return this;
+    }
 
-    public BlockLayerSteeldollar(int i, Material material) {
+    public BlockHoardLayerBase(int i, Material material) {
         super(i, material);
         this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.125F, 1.0F);
         this.setTickOnLoad(true);
@@ -41,7 +39,7 @@ public class BlockLayerSteeldollar extends BlockLayerBase {
             myMetadata++;
             world.setBlockMetadata(x, y, z, myMetadata);
             if (myMetadata == 7) {
-                world.setBlock(x, y, z, Hoard.steeldollarBlock.blockID);
+                world.setBlock(x, y, z, fullBlockID);//Hoard.steeldollarBlock.blockID);
             }
             world.markBlockNeedsUpdate(x, y, z);
         }
@@ -77,7 +75,7 @@ public class BlockLayerSteeldollar extends BlockLayerBase {
     }
 
     public int idDropped(int i, Random random) {
-        return Hoard.pileSteeldollar.itemID;
+        return pileID;
     }
 
     public int quantityDropped(int metadata, Random random) {

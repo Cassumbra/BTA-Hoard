@@ -5,13 +5,20 @@ import net.minecraft.src.Material;
 
 import java.util.Random;
 
-public class BlockSteeldollar extends Block {
-    public BlockSteeldollar(int i, Material material) {
+public class BlockHoardBase extends Block {
+    public BlockHoardBase(int i, Material material) {
         super(i, material);
     }
 
+    public int pileID = -1;
+
+    public Block setMaterialID(int materialID) {
+        this.pileID = materialID;
+        return this;
+    }
+
     public int idDropped(int i, Random random) {
-        return Hoard.pileSteeldollar.itemID;
+        return pileID;
     }
 
     public int quantityDropped(int metadata, Random random) {
