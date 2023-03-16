@@ -1,17 +1,20 @@
 package varigata.hoard.mixin;
 
 import net.minecraft.src.*;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 
 import java.util.List;
+import java.util.Random;
 
 @Mixin(value = Entity.class, remap = false)
 public abstract class LayerStepSoundFix{
 
     @Shadow
     public boolean noClip;
+    @Final
     @Shadow
     public AxisAlignedBB boundingBox;
     @Shadow
@@ -21,9 +24,9 @@ public abstract class LayerStepSoundFix{
     @Shadow
     public double posZ;
     @Shadow
-    public double yOffset;
+    public float yOffset;
     @Shadow
-    public double ySize;
+    public float ySize;
     @Shadow
     public boolean isInWeb;
     @Shadow
@@ -47,21 +50,40 @@ public abstract class LayerStepSoundFix{
     @Shadow
     public boolean isCollided;
     @Shadow
-    public Object ridingEntity;
+    public Entity ridingEntity;
     @Shadow
-    public double distanceWalkedModified;
+    public float distanceWalkedModified;
     @Shadow
-    public double prevDistanceWalkedModified;
+    public float prevDistanceWalkedModified;
     @Shadow
     public boolean isWalking;
     @Shadow
     private int nextStepDistance;
+    @Shadow
+    public int fire;
+    @Shadow
+    public int maxFire;
+
+    @Shadow
+    public int fireResistance;
+    @Shadow
+    protected Random rand;
 
 
     @Shadow
     public abstract boolean isSneaking();
-    //@Shadow
-    //public abstract void updateFallState();
+    @Shadow
+    protected void updateFallState(double y, boolean onGround) {
+    }
+
+    @Shadow
+    public abstract boolean isWet();
+
+    @Shadow
+    protected abstract boolean canTriggerWalking();
+
+    @Shadow
+    protected abstract void dealFireDamage(int i);
 
     /**
      * @author Varigata
@@ -95,7 +117,7 @@ public abstract class LayerStepSoundFix{
             boolean flag = this.onGround && this.isSneaking();
             if (flag) {
                 double d8;
-                for(d8 = 0.05; x != 0.0 && this.worldObj.getCollidingBoundingBoxes(this, this.boundingBox.getOffsetBoundingBox(x, -1.0, 0.0)).size() == 0; d5 = x) {
+                for(d8 = 0.05; x != 0.0 && this.worldObj.getCollidingBoundingBoxes((Entity)((Object)this), this.boundingBox.getOffsetBoundingBox(x, -1.0, 0.0)).size() == 0; d5 = x) {
                     if (x < d8 && x >= -d8) {
                         x = 0.0;
                     } else if (x > 0.0) {
@@ -105,7 +127,7 @@ public abstract class LayerStepSoundFix{
                     }
                 }
 
-                for(; z != 0.0 && this.worldObj.getCollidingBoundingBoxes(this, this.boundingBox.getOffsetBoundingBox(0.0, -1.0, z)).size() == 0; d7 = z) {
+                for(; z != 0.0 && this.worldObj.getCollidingBoundingBoxes((Entity)((Object)this), this.boundingBox.getOffsetBoundingBox(0.0, -1.0, z)).size() == 0; d7 = z) {
                     if (z < d8 && z >= -d8) {
                         z = 0.0;
                     } else if (z > 0.0) {
@@ -116,7 +138,7 @@ public abstract class LayerStepSoundFix{
                 }
             }
 
-            List list = this.worldObj.getCollidingBoundingBoxes(this, this.boundingBox.addCoord(x, y, z));
+            List list = this.worldObj.getCollidingBoundingBoxes((Entity)((Object)this), this.boundingBox.addCoord(x, y, z));
 
             for(int i = 0; i < list.size(); ++i) {
                 y = ((AxisAlignedBB)list.get(i)).calculateYOffset(this.boundingBox, y);
@@ -166,7 +188,7 @@ public abstract class LayerStepSoundFix{
                 z = d7;
                 AxisAlignedBB axisalignedbb1 = this.boundingBox.copy();
                 this.boundingBox.setBB(axisalignedbb);
-                List list1 = this.worldObj.getCollidingBoundingBoxes(this, this.boundingBox.addCoord(d5, y, d7));
+                List list1 = this.worldObj.getCollidingBoundingBoxes((Entity)((Object)this), this.boundingBox.addCoord(d5, y, d7));
 
                 for(i3 = 0; i3 < list1.size(); ++i3) {
                     y = ((AxisAlignedBB)list1.get(i3)).calculateYOffset(this.boundingBox, y);
@@ -223,7 +245,7 @@ public abstract class LayerStepSoundFix{
                 }
             }
 
-            if (!this.worldObj.isMultiplayerAndNotHost || this instanceof EntityPlayer || !(this instanceof EntityLiving)) {
+            if (!this.worldObj.isMultiplayerAndNotHost || (Entity)((Object)this) instanceof EntityPlayer || !((Entity)((Object)this) instanceof EntityLiving)) {
                 this.posX = (this.boundingBox.minX + this.boundingBox.maxX) / 2.0;
                 this.posY = this.boundingBox.minY + (double)this.yOffset - (double)this.ySize;
                 this.posZ = (this.boundingBox.minZ + this.boundingBox.maxZ) / 2.0;
@@ -271,14 +293,16 @@ public abstract class LayerStepSoundFix{
                 if (this.distanceWalkedModified > (float)this.nextStepDistance && j3 > 0) {
                     ++this.nextStepDistance;
                     StepSound stepsound = Block.blocksList[j3].stepSound;
-                    if (this.worldObj.getBlockId(l, j1 + 1, l1) == Block.layerSnow.blockID) {
-                        stepsound = Block.layerSnow.stepSound;
-                        this.worldObj.playSoundAtEntity(this, stepsound.func_1145_d(), stepsound.getVolume() * 0.15F, stepsound.getPitch());
+                    //if (this.worldObj.getBlockId(l, j1 + 1, l1) == Block.layerSnow.blockID) {
+                    if (this.worldObj.getBlockTileEntity(l, j1 + 1, l1).getBlockType() instanceof BlockLayerBase) {
+                        //stepsound = Block.layerSnow.stepSound;
+                        stepsound = this.worldObj.getBlockTileEntity(l, j1 + 1, l1).getBlockType().stepSound;
+                        this.worldObj.playSoundAtEntity((Entity)((Object)this), stepsound.func_1145_d(), stepsound.getVolume() * 0.15F, stepsound.getPitch());
                     } else if (!Block.blocksList[j3].blockMaterial.getIsLiquid()) {
-                        this.worldObj.playSoundAtEntity(this, stepsound.func_1145_d(), stepsound.getVolume() * 0.15F, stepsound.getPitch());
+                        this.worldObj.playSoundAtEntity((Entity)((Object)this), stepsound.func_1145_d(), stepsound.getVolume() * 0.15F, stepsound.getPitch());
                     }
 
-                    Block.blocksList[j3].onEntityWalking(this.worldObj, l, j1, l1, this);
+                    Block.blocksList[j3].onEntityWalking(this.worldObj, l, j1, l1, (Entity)((Object)this));
                 }
             }
 
@@ -294,7 +318,7 @@ public abstract class LayerStepSoundFix{
                         for(int l4 = l1; l4 <= i4; ++l4) {
                             int i5 = this.worldObj.getBlockId(j4, k4, l4);
                             if (i5 > 0) {
-                                Block.blocksList[i5].onEntityCollidedWithBlock(this.worldObj, j4, k4, l4, this);
+                                Block.blocksList[i5].onEntityCollidedWithBlock(this.worldObj, j4, k4, l4, (Entity)((Object)this));
                             }
                         }
                     }
@@ -317,7 +341,7 @@ public abstract class LayerStepSoundFix{
             }
 
             if (flag2 && this.fire > 0) {
-                this.worldObj.playSoundAtEntity(this, "random.fizz", 0.7F, 1.6F + (this.rand.nextFloat() - this.rand.nextFloat()) * 0.4F);
+                this.worldObj.playSoundAtEntity((Entity)((Object)this), "random.fizz", 0.7F, 1.6F + (this.rand.nextFloat() - this.rand.nextFloat()) * 0.4F);
                 this.fire = -this.fireResistance;
             }
 
