@@ -32,14 +32,8 @@ public class TrommelRecipes extends TileEntity {
 
     @Inject(method = "canProduce", at = @At(value = "HEAD"), cancellable = true)
     private void hoard_canProduce(int slotIndex, CallbackInfoReturnable<Boolean> cir) {
-        //System.out.println("a");
-        //System.out.println("itemstacks slotindex: " + itemStacks[slotIndex]);
         if (itemStacks[slotIndex] != null && sievableItems.containsKey(itemStacks[slotIndex].itemID)) {
-            //System.out.println("b");
-            System.out.println("Testing cir.setReturnValue(true)");
             cir.setReturnValue(true);
-            return;
-            //System.out.println("Test failure.");
         }
     }
 
@@ -50,13 +44,11 @@ public class TrommelRecipes extends TileEntity {
         if (sievableItems.containsKey(item_id)) {
             ArrayList<ItemStack> itemStackList = new ArrayList<>();
             sievableItems.get(item_id).forEach(bag ->{
-                // This .getRandom() call causes problems, for some reason.
-                //ItemStack itemResult = ((WeightedRandomLootObject)bag.getRandom()).getItemStack();
-                //itemStackList.add(itemResult);
+                ItemStack itemResult = ((WeightedRandomLootObject)bag.getRandom()).getItemStack();
+                System.out.println("itemresult: " + itemResult.stackSize + " " + itemResult.getItemName());
+                itemStackList.add(itemResult);
 
             });
-            // Temp. Used for testing atm.
-            itemStackList.add(new ItemStack(Block.blockSteel, 1));
             --this.itemStacks[slotIndex].stackSize;
             if (this.itemStacks[slotIndex].stackSize <= 0) {
                 this.itemStacks[slotIndex] = null;
@@ -121,13 +113,14 @@ public class TrommelRecipes extends TileEntity {
                         if (slot != null && slot.itemID == itemResult.itemID && slot.getMetadata() == itemResult.getMetadata()) {
                             while(slot.stackSize + 1 <= slot.getMaxStackSize()) {
                                 ++slot.stackSize;
+                                --itemResult.stackSize;
                                 chest.setInventorySlotContents(i, slot);
                                 if (itemResult.stackSize <= 0) {
                                     ci.cancel();
                                     return;
                                 }
 
-                                --itemResult.stackSize;
+
                             }
                         }
 
@@ -174,16 +167,9 @@ public class TrommelRecipes extends TileEntity {
         //ArrayList pileSteeldollarSieve = new ArrayList<>();
         //pileSteeldollarSieve.add()
         WeightedRandomBag<WeightedRandomLootObject> steelBlock = new WeightedRandomBag<>();
-        steelBlock.addEntry(new WeightedRandomLootObject(new ItemStack(Block.blockSteel), 1, 1), 100);
-        steelBlock.addEntry(new WeightedRandomLootObject(new ItemStack(Block.blockSteel), 1, 1), 100);
+        steelBlock.addEntry(new WeightedRandomLootObject(new ItemStack(Block.blockSteel), 1), 100);
         WeightedRandomBag<WeightedRandomLootObject> olivineBlock = new WeightedRandomBag<>();
-        olivineBlock.addEntry(new WeightedRandomLootObject(new ItemStack(Block.blockOlivine), 1, 1), 100);
-        olivineBlock.addEntry(new WeightedRandomLootObject(new ItemStack(Block.blockOlivine), 1, 1), 100);
+        olivineBlock.addEntry(new WeightedRandomLootObject(new ItemStack(Block.blockOlivine), 2), 100);
         sievableItems.put(Hoard.pileSteeldollar.itemID, asList(steelBlock, olivineBlock));
     }
-
-    //@Inject(method = "getItemResult", at = @At(value = "HEAD"))
-    //private void hoard_trommelGetItemResult(ItemStack slotItem, CallbackInfoReturnable<ItemStack> cir) {
-
-    //}
 }
