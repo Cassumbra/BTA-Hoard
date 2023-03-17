@@ -15,7 +15,7 @@ public class Hoard implements ModInitializer {
     public static final String MOD_ID = "hoard";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
-    
+
     // Items
     public static final Item pileSteeldollar = ItemHelper.createItem(MOD_ID, new ItemHoardPileBase(140), "pile.steeldollar", "steeldollar_pile.png");
     public static final Item steeldollar = ItemHelper.createItem(MOD_ID, new Item(141), "steeldollar", "steeldollar.png");
