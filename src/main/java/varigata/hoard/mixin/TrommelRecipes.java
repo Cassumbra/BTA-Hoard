@@ -36,42 +36,35 @@ public class TrommelRecipes extends TileEntity {
         //System.out.println("itemstacks slotindex: " + itemStacks[slotIndex]);
         if (itemStacks[slotIndex] != null && sievableItems.containsKey(itemStacks[slotIndex].itemID)) {
             //System.out.println("b");
+            System.out.println("Testing cir.setReturnValue(true)");
             cir.setReturnValue(true);
+            return;
+            //System.out.println("Test failure.");
         }
     }
 
     @Inject(method = "sieveItem", at = @At(value = "HEAD"), cancellable = true)
     public void hoard_sieveItem(int slotIndex, CallbackInfo ci) {
-        //System.out.println("sievableitems" + sievableItems);
         ItemStack itemstack = this.itemStacks[slotIndex];
         int item_id = itemstack.itemID;
         if (sievableItems.containsKey(item_id)) {
-            //System.out.println("I'M GONNA FUCKING FUCK!!!!");
             ArrayList<ItemStack> itemStackList = new ArrayList<>();
-            //System.out.println("NEO PROBLEM DETECTOR 1 ONLINE B]");
             sievableItems.get(item_id).forEach(bag ->{
-                //System.out.println("NEO PROBLEM DETECTOR 2 ONLINE B]");
-                //PROBLEM LOCATED
-                //System.out.println("bag" + bag);
+                // This .getRandom() call causes problems, for some reason.
                 //ItemStack itemResult = ((WeightedRandomLootObject)bag.getRandom()).getItemStack();
                 //itemStackList.add(itemResult);
 
             });
-            //itemStackList.add(new ItemStack(Block.blockSteel, 1));
-            //System.out.println("NEO PROBLEM DETECTOR 3 ONLINE B]");
+            // Temp. Used for testing atm.
+            itemStackList.add(new ItemStack(Block.blockSteel, 1));
             --this.itemStacks[slotIndex].stackSize;
             if (this.itemStacks[slotIndex].stackSize <= 0) {
-                //System.out.println("NEO PROBLEM DETECTOR 4 ONLINE B]");
                 this.itemStacks[slotIndex] = null;
             }
-            //System.out.println("Problem detector number 1 is on duty. >:^)");
-            //itemStackList.forEach(itemResult -> {
-                ItemStack itemResult = new ItemStack(Block.blockSteel, 1);
-                System.out.println("itemresult stacksize: " + itemResult.stackSize);
-                //--itemResult.stackSize;
-                //System.out.println("itemresult stacksize after subtraction: " + itemResult.stackSize);
-                //++itemResult.stackSize;
-                //System.out.println("itemresult stacksize after addition: " + itemResult.stackSize);
+
+            itemStackList.forEach(itemResult -> {
+
+                // Figure out which way the hole in the block is facing
                 int xOffset = 0;
                 int zOffset = 0;
                 int meta = this.worldObj.getBlockMetadata(this.xCoord, this.yCoord, this.zCoord) & 7;
@@ -84,61 +77,65 @@ public class TrommelRecipes extends TileEntity {
                 } else if (meta == 4) {
                     zOffset = 1;
                 }
-                //System.out.println("Problem detector number 2 is on duty. >:^)");
+                // Figure out the block/chest that output will get inserted into (if any)
                 int adjacentId = this.worldObj.getBlockId(this.xCoord + xOffset, this.yCoord, this.zCoord + zOffset);
                 TileEntityChest chest = null;
                 if (Block.blocksList[adjacentId] instanceof BlockChest) {
                     chest = (TileEntityChest)this.worldObj.getBlockTileEntity(this.xCoord + xOffset, this.yCoord, this.zCoord + zOffset);
                 }
-                //System.out.println("Problem detector number 3 is on duty. >:^)");
+                // If we have a chest, start trying to insert into it.
                 if (chest != null) {
                     int i = 0;
 
                     label78:
                     while(true) {
                         ItemStack slot;
+                        // Don't try to insert into empty slots until we've looked at every occupied slot.
                         if (i >= chest.getSizeInventory()) {
+                            // If the stacksize of our item is 0 or less, stop.
                             if (itemResult.stackSize <= 0) {
                                 ci.cancel();
+                                return;
                             }
 
+                            // Loop over every empty slot in the chest and try to insert there.
                             i = 0;
-
                             while(true) {
                                 if (i >= chest.getSizeInventory()) {
                                     break label78;
                                 }
 
                                 slot = chest.getStackInSlot(i);
+                                // If there is nothing in the slot we are trying to insert into, insert into it.
                                 if (slot == null) {
                                     chest.setInventorySlotContents(i, itemResult);
                                     ci.cancel();
+                                    return;
                                 }
 
                                 ++i;
                             }
                         }
-                        //System.out.println("Problem detector number 4 is on duty. >:^)");
                         slot = chest.getStackInSlot(i);
+                        // Check to see that slot has the same contents as the item we are trying to insert
                         if (slot != null && slot.itemID == itemResult.itemID && slot.getMetadata() == itemResult.getMetadata()) {
                             while(slot.stackSize + 1 <= slot.getMaxStackSize()) {
                                 ++slot.stackSize;
                                 chest.setInventorySlotContents(i, slot);
                                 if (itemResult.stackSize <= 0) {
                                     ci.cancel();
+                                    return;
                                 }
 
                                 --itemResult.stackSize;
-                                System.out.println("itemresult stacksize after subtraction: " + itemResult.stackSize);
                             }
                         }
 
                         ++i;
                     }
                 }
-                //System.out.println("Problem detector number 5 is on duty. >:^)");
+
                 if (itemResult.stackSize > 0) {
-                    System.out.println("itemresult stacksize after if statement: " + itemResult.stackSize);
                     float f = this.rand.nextFloat() * 0.8F + 0.1F;
                     float f1 = this.rand.nextFloat() * 0.8F + 0.1F;
                     float f2 = this.rand.nextFloat() * 0.8F + 0.1F;
@@ -150,9 +147,8 @@ public class TrommelRecipes extends TileEntity {
                     this.worldObj.entityJoinedWorld(entityitem);
                 }
 
-            //});
+            });
 
-            //System.out.println("Problem detector number 6 is on duty. >:^)");
             if (this.rand.nextInt(4000) == 0) {
                 float f = 0.125F;
                 float f1 = 0.125F;
@@ -166,9 +162,9 @@ public class TrommelRecipes extends TileEntity {
                 this.worldObj.entityJoinedWorld(entityslime);
             }
 
-            //System.out.println("Problem detector number 7 is on duty. >:^)");
 
             ci.cancel();
+            return;
         }
 
     }
