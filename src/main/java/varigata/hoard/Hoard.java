@@ -1,16 +1,30 @@
 package varigata.hoard;
 
 import net.fabricmc.api.ModInitializer;
+import net.minecraft.client.Minecraft;
 import net.minecraft.src.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import turniplabs.halplibe.helper.*;
+
+import java.io.File;
 
 
 public class Hoard implements ModInitializer {
 
     public static final String MOD_ID = "hoard";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
+
+    private static final File dir = Minecraft.getAppDir("minecraft-bta/resources/mod/sound/");
+
+    static {
+        Sound.initAudioFile(dir.getPath(), "step.gold1.ogg");
+        Sound.registerAudioFile(dir.getPath(), "step.gold1.ogg", "step");
+    }
+
+
+    public static final StepSound soundCoinsFootstep = new StepSound("gold1", 1.0F, 1.0F);
+
 
 
     // Items
@@ -30,16 +44,22 @@ public class Hoard implements ModInitializer {
 
     public static final Block blockRimmedDucat = BlockHelper.createBlock(MOD_ID, new BlockHoardBase(902, Material.sand), "block.rimmedDucat",
             "rimmedDucat_1.png",
-            Block.soundGravelFootstep, 3.0F, 5.0F, 0);
+            soundCoinsFootstep, 3.0F, 5.0F, 0);
     public static final Block layerRimmedDucat = BlockHelper.createBlock(MOD_ID, new BlockHoardLayerBase(903, Material.sand), "layer.rimmedDucat",
             "rimmedDucat_1.png",
-            Block.soundGravelFootstep, 3.0F, 5.0F, 0).setNotInCreativeMenu();
+            soundCoinsFootstep, 3.0F, 5.0F, 0).setNotInCreativeMenu();
 
 
 
     @Override
     public void onInitialize() {
         LOGGER.info("Hoard initialized.");
+
+        // Template. Needs to be modified.
+        //for(int i = 1; i <= 4; i++) {
+        //    initAudioFile(dir.getPath(), "softrain" + i + ".ogg");
+        //    registerAudioFile(dir.getPath(), "softrain" + i + ".ogg", "ambient/weather");
+        //}
 
         setHoardProperties(pileSteeldollar, layerSteeldollar, blockSteeldollar);
         setHoardProperties(pileRimmedDucat, layerRimmedDucat, blockRimmedDucat);

@@ -58,7 +58,8 @@ public class ItemHoardPileBase extends Item {
 
         if (placed) {
             itemstack.consumeItem(entityplayer);
-            world.playSoundEffect((double)((float)i + 0.5F), (double)((float)j + 0.5F), (double)((float)k + 0.5F), Block.getBlock(layerID).stepSound.func_1145_d(), (Block.getBlock(layerID).stepSound.getVolume() + 1.0F) / 2.0F, Block.getBlock(layerID).stepSound.getPitch() * 0.8F);
+            world.playSoundEffect((double)((float)i + 0.5F), (double)((float)j + 0.5F), (double)((float)k + 0.5F), "step.gold1", (Block.getBlock(layerID).stepSound.getVolume() + 1.0F) / 2.0F, Block.getBlock(layerID).stepSound.getPitch() * 0.8F);
+            //world.playSoundEffect((double)((float)i + 0.5F), (double)((float)j + 0.5F), (double)((float)k + 0.5F), Block.getBlock(layerID).stepSound.func_1145_d(), (Block.getBlock(layerID).stepSound.getVolume() + 1.0F) / 2.0F, Block.getBlock(layerID).stepSound.getPitch() * 0.8F);
         }
 
         return placed;
