@@ -6,9 +6,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import turniplabs.halplibe.helper.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
 
 public class Hoard implements ModInitializer {
 
@@ -20,15 +17,23 @@ public class Hoard implements ModInitializer {
     public static final Item pileSteeldollar = ItemHelper.createItem(MOD_ID, new ItemHoardPileBase(140), "pile.steeldollar", "steeldollar_pile.png");
     public static final Item steeldollar = ItemHelper.createItem(MOD_ID, new Item(141), "steeldollar", "steeldollar.png");
 
+    public static final Item pileRimmedDucat = ItemHelper.createItem(MOD_ID, new ItemHoardPileBase(142), "pile.rimmedDucat", "rimmedDucat_pile.png");
+    public static final Item rimmedDucat = ItemHelper.createItem(MOD_ID, new Item(143), "rimmedDucat", "rimmedDucat.png");
+
     // Blocks
-    public static final Block steeldollarBlock = BlockHelper.createBlock(MOD_ID, new BlockHoardBase(900, Material.sand), "block.steeldollar",
+    public static final Block blockSteeldollar = BlockHelper.createBlock(MOD_ID, new BlockHoardBase(900, Material.sand), "block.steeldollar",
             "steeldollar_tex_y.png", "steeldollar_tex_y.png", "steeldollar_tex_x.png", "steeldollar_tex_z.png", "steeldollar_tex_x.png", "steeldollar_tex_z.png",
             Block.soundMetalFootstep, 3.0F, 5.0F, 0);
-
-
     public static final Block layerSteeldollar = BlockHelper.createBlock(MOD_ID, new BlockHoardLayerBase(901, Material.sand), "layer.steeldollar",
             "steeldollar_tex_y.png", "steeldollar_tex_y.png", "steeldollar_tex_x.png", "steeldollar_tex_z.png", "steeldollar_tex_x.png", "steeldollar_tex_z.png",
             Block.soundMetalFootstep, 3.0F, 5.0F, 0).setNotInCreativeMenu();
+
+    public static final Block blockRimmedDucat = BlockHelper.createBlock(MOD_ID, new BlockHoardBase(902, Material.sand), "block.rimmedDucat",
+            "rimmedDucat_1.png",
+            Block.soundGravelFootstep, 3.0F, 5.0F, 0);
+    public static final Block layerRimmedDucat = BlockHelper.createBlock(MOD_ID, new BlockHoardLayerBase(903, Material.sand), "layer.rimmedDucat",
+            "rimmedDucat_1.png",
+            Block.soundGravelFootstep, 3.0F, 5.0F, 0).setNotInCreativeMenu();
 
 
 
@@ -36,10 +41,14 @@ public class Hoard implements ModInitializer {
     public void onInitialize() {
         LOGGER.info("Hoard initialized.");
 
-        setHoardProperties(pileSteeldollar, layerSteeldollar, steeldollarBlock);
+        setHoardProperties(pileSteeldollar, layerSteeldollar, blockSteeldollar);
+        setHoardProperties(pileRimmedDucat, layerRimmedDucat, blockRimmedDucat);
 
         RecipeHelper.Crafting.createRecipe(pileSteeldollar, 1, new Object[]{"###", "ABA", "###", 'A', Block.blockOlivine, 'B', Block.blockSteel});
-        generateHoardRecipes(steeldollar, pileSteeldollar, steeldollarBlock);
+        RecipeHelper.Crafting.createRecipe(pileRimmedDucat, 1, new Object[]{"ABA", "BCB", "ABA", 'A', new ItemStack(Item.dye, 1, 4), 'B', Item.ingotGold, 'C', Block.blockLapis});
+
+        generateHoardRecipes(steeldollar, pileSteeldollar, blockSteeldollar);
+        generateHoardRecipes(rimmedDucat, pileRimmedDucat, blockRimmedDucat);
     }
 
     // TODO: These might be useful later when we have more hoard types.
