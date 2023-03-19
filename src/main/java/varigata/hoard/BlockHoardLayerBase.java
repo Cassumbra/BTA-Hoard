@@ -51,7 +51,8 @@ public class BlockHoardLayerBase extends BlockLayerBase {
         int l = world.getBlockId(i, j, k);
         if (l == 0) {
             return true;
-        } else if (l == world.getBlockId(i, j + 1, k)) {
+        } else if (Block.getBlock(l) instanceof BlockLayerBase) {
+        //} else if (l == world.getBlockId(i, j + 1, k)) {
             return true;
         } else if (l == Block.fire.blockID) {
             return true;
@@ -98,11 +99,6 @@ public class BlockHoardLayerBase extends BlockLayerBase {
 
     /// Layers are given to ijk
     public static void giveLayers(World world, int x, int y, int z, int i, int j, int k) {
-        //int giveID = world.getBlockId(x, y, z);
-        //int takeID = world.getBlockId(i, j, k);
-        //if (giveID != takeID || ) {
-        // return false;
-        //}
 
         int giveMetadata = world.getBlockMetadata(x, y, z);
         int takeMetadata = world.getBlockMetadata(i, j, k);
@@ -121,44 +117,22 @@ public class BlockHoardLayerBase extends BlockLayerBase {
             int fullBlockID = ((BlockHoardLayerBase)Block.getBlock(world.getBlockId(i, j, k))).fullBlockID;
             world.setBlockWithNotify(i, j, k, fullBlockID);
         }
+        // I don't know if this one is necessary?
+        if (world.getBlockMetadata(x, y, z) == 7) {
+            int fullBlockID = ((BlockHoardLayerBase)Block.getBlock(world.getBlockId(x, y, z))).fullBlockID;
+            world.setBlockWithNotify(x, y, z, fullBlockID);
+        }
         world.markBlockNeedsUpdate(i, j, k);
         world.markBlockNeedsUpdate(x, y, z);
     }
 
     public boolean canPlaceBlockAt(World world, int i, int j, int k) {
         return true;
-
-        //int l = world.getBlockId(i, j - 1, k);
-        //if (l == 0 || !Block.blocksList[l].isOpaqueCube() && !(Block.blocksList[l] instanceof BlockLeavesBase)) {
-            // Change this, later, so that we can place blocks in air and have them fall.
-        //    return false;
-        //}
-        //else if (l == 901) {//Block.BlockLayerSteeldollar.blockID) {
-        //    ((BlockLayerSteeldollar)Hoard.layerSteeldollar).accumulate(world, i, j - 1, k );
-        //}
-        //else {
-        //    Material material = world.getBlockMaterial(i, j - 1, k);
-        //    return material == Material.leaves || material.getIsSolid();
-        //}
     }
-
-    //public void onNeighborBlockChange(World world, int i, int j, int k, int l) {
-    //    this.func_314_h(world, i, j, k);
-    //}
 
     public void onNeighborBlockChange(World world, int i, int j, int k, int l) {
         world.scheduleBlockUpdate(i, j, k, this.blockID, this.tickRate());
     }
-
-    //private boolean func_314_h(World world, int i, int j, int k) {
-    //    if (!this.canPlaceBlockAt(world, i, j, k)) {
-    //        this.dropBlockAsItem(world, i, j, k, world.getBlockMetadata(i, j, k));
-    //        world.setBlockWithNotify(i, j, k, 0);
-    //        return false;
-    //    } else {
-    //        return true;
-    //    }
-    //}
 
     public int idDropped(int i, Random random) {
         return pileID;

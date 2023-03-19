@@ -54,6 +54,8 @@ public class Hoard implements ModInitializer {
 
         generateHoardRecipes(steeldollar, pileSteeldollar, blockSteeldollar);
         generateHoardRecipes(rimmedDucat, pileRimmedDucat, blockRimmedDucat);
+
+        System.out.println("WHAT? HOW? " + ((BlockHoardBase)blockSteeldollar).layerID);
     }
 
     // TODO: These might be useful later when we have more hoard types.
@@ -62,10 +64,11 @@ public class Hoard implements ModInitializer {
 
     //}
     // Function for automatically setting up properties
-    public void setHoardProperties(Item pile, Block layer, Block block) {
+    public static void setHoardProperties(Item pile, Block layer, Block block) {
         ((ItemHoardPileBase) pile).setLayerID(layer.blockID);
         ((ItemHoardPileBase) pile).setLayerID(layer.blockID);
         ((BlockHoardBase) block).setMaterialID(pile.itemID);
+        ((BlockHoardBase) block).setLayerID(layer.blockID);
         ((BlockHoardLayerBase) layer).setMaterialID(pile.itemID);
         ((BlockLayerBase) layer).setFullBlockID(block.blockID);
     }

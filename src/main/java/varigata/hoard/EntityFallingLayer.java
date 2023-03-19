@@ -5,6 +5,7 @@ import net.minecraft.src.*;
 public class EntityFallingLayer extends EntityFallingSand {
 
     private int pileID = -1;
+    private int fullBlockID = -1;
     public int metadata = 0;
 
     public EntityFallingLayer(World world) {
@@ -19,6 +20,7 @@ public class EntityFallingLayer extends EntityFallingSand {
         this.blockID = i;
         this.metadata = metadata;
         this.pileID = ((BlockHoardLayerBase)Block.getBlock(blockID)).pileID;
+        this.fullBlockID = ((BlockHoardLayerBase)Block.getBlock(blockID)).fullBlockID;
         this.preventEntitySpawning = true;
         this.setSize(0.98F, 0.98F);
         this.yOffset = this.height / 2.0F;
@@ -47,13 +49,16 @@ public class EntityFallingLayer extends EntityFallingSand {
             int i = MathHelper.floor_double(this.posX);
             int j = MathHelper.floor_double(this.posY);
             int k = MathHelper.floor_double(this.posZ);
-            if (this.worldObj.getBlockId(i, j, k) == this.blockID) {
+
+            int idHere = this.worldObj.getBlockId(i, j, k);
+
+            if (idHere == this.blockID || idHere == this.fullBlockID) {
                 // Start of fall
                 if (this.fallTime < 2) {
                     this.worldObj.setBlockWithNotify(i, j, k, 0);
                 }
                 // Two falling layers have overlapped while falling/landing. Try to merge them.
-                else {
+                else if (idHere == this.blockID) {
                     if (this.worldObj.canBlockBePlacedAt(this.blockID, i, j+1, k, true, 1)) {
                         this.worldObj.setBlockAndMetadataWithNotify(i, j+1, k, this.blockID, this.metadata);
                         BlockHoardLayerBase.giveLayers(this.worldObj, i, j+1, k, i, j, k);
@@ -69,15 +74,20 @@ public class EntityFallingLayer extends EntityFallingSand {
                 this.motionY *= -0.5;
                 this.setEntityDead();
 
-                if ((!this.worldObj.canBlockBePlacedAt(this.blockID, i, j, k, true, 1) || BlockHoardLayerBase.canFallBelow(this.worldObj, i, j - 1, k)) && !this.worldObj.isMultiplayerAndNotHost) {
+                if ((!this.worldObj.canBlockBePlacedAt(this.blockID, i, j, k, true, 1) || (BlockHoardLayerBase.canFallBelow(this.worldObj, i, j - 1, k) && this.worldObj.getBlockId(i, j-1, k) != this.blockID)) && !this.worldObj.isMultiplayerAndNotHost) {
                     // TODO: Make this drop the proper thingies
                     //int pileID = ((BlockHoardLayerBase)Block.getBlock(blockID)).pileID;
                     this.dropItem(this.pileID, metadata + 1);
                 } else {
                     boolean trySetBlock = this.worldObj.setBlockAndMetadataWithNotify(i, j, k, this.blockID, this.metadata);
 
-                    if (trySetBlock && this.worldObj.getBlockId(i, j - 1, k) == this.blockID) {
-                        BlockHoardLayerBase.giveLayers(this.worldObj, i, j, k, i, j-1, k);
+                    if (trySetBlock) {
+                        if (this.worldObj.getBlockId(i, j - 1, k) == this.blockID) {
+                            BlockHoardLayerBase.giveLayers(this.worldObj, i, j, k, i, j-1, k);
+                        }
+                        if (this.worldObj.getBlockMetadata(i, j, k) == 7) {
+                            this.worldObj.setBlockWithNotify(i, j, k, this.fullBlockID);
+                        }
                     }
                 }
 
