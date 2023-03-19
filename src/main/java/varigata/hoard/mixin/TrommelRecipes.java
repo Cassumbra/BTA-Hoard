@@ -164,12 +164,16 @@ public class TrommelRecipes extends TileEntity {
 
 
     static {
-        //ArrayList pileSteeldollarSieve = new ArrayList<>();
-        //pileSteeldollarSieve.add()
-        WeightedRandomBag<WeightedRandomLootObject> steelBlock = new WeightedRandomBag<>();
-        steelBlock.addEntry(new WeightedRandomLootObject(new ItemStack(Block.blockSteel), 1), 100);
-        WeightedRandomBag<WeightedRandomLootObject> olivineBlock = new WeightedRandomBag<>();
-        olivineBlock.addEntry(new WeightedRandomLootObject(new ItemStack(Block.blockOlivine), 2), 100);
-        sievableItems.put(Hoard.pileSteeldollar.itemID, asList(steelBlock, olivineBlock));
+        WeightedRandomBag<WeightedRandomLootObject> steel = new WeightedRandomBag<>();
+        steel.addEntry(new WeightedRandomLootObject(new ItemStack(Item.ingotSteel), 9), 100);
+        WeightedRandomBag<WeightedRandomLootObject> olivine = new WeightedRandomBag<>();
+        olivine.addEntry(new WeightedRandomLootObject(new ItemStack(Item.olivine), 18), 100);
+        sievableItems.put(Hoard.pileSteeldollar.itemID, asList(steel, olivine));
+
+        WeightedRandomBag<WeightedRandomLootObject> gold = new WeightedRandomBag<>();
+        gold.addEntry(new WeightedRandomLootObject(new ItemStack(Item.ingotGold), 4), 100);
+        WeightedRandomBag<WeightedRandomLootObject> lapis = new WeightedRandomBag<>();
+        lapis.addEntry(new WeightedRandomLootObject(new ItemStack(Item.dye, 1, 4), 13), 100);
+        sievableItems.put(Hoard.pileRimmedDucat.itemID, asList(gold, lapis));
     }
 }
