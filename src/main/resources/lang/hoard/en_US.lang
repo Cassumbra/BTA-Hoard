@@ -6,6 +6,13 @@ tile.hoard.block.steeldollar.name=Steeldollar Block
 tile.hoard.block.steeldollar.desc=A block of 64 steeldollars.
 tile.hoard.layer.steeldollar.name=Steeldollar Layer
 tile.hoard.layer.steeldollar.desc=You shouldn't have this item.
-
+item.hoard.pile.rimmedDucat.name=Rimmed Ducat Pile
+item.hoard.pile.rimmedDucat.desc=A pile of Rimmed Ducats. Can be placed in the world.
+item.hoard.rimmedDucat.name=Rimmed Ducat
+item.hoard.rimmedDucat.desc=A gold coin inlaid with lapis lazuli.
+tile.hoard.block.rimmedDucat.name=Rimmed Ducat Block
+tile.hoard.block.rimmedDucat.desc=A block of 64 Rimmed Ducats.
+tile.hoard.layer.rimmedDucat.name=Rimmmed Ducat Layer
+tile.hoard.layer.rimmedDucat.desc=You shouldn't have this item.
 
 
