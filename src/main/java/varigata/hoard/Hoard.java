@@ -13,6 +13,10 @@ public class Hoard implements ModInitializer {
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
 
+
+    public static final StepSound soundCoinsFootstep = new StepSound("gravel", 1.0F, 4.0F);
+
+
     // Items
     public static final Item pileSteeldollar = ItemHelper.createItem(MOD_ID, new ItemHoardPileBase(140), "pile.steeldollar", "steeldollar_pile.png");
     public static final Item steeldollar = ItemHelper.createItem(MOD_ID, new Item(141), "steeldollar", "steeldollar.png");
@@ -29,11 +33,12 @@ public class Hoard implements ModInitializer {
             Block.soundMetalFootstep, 3.0F, 5.0F, 0).setNotInCreativeMenu();
 
     public static final Block blockRimmedDucat = BlockHelper.createBlock(MOD_ID, new BlockHoardBase(902, Material.sand), "block.rimmedDucat",
-            "rimmedDucat_1.png",
-            Block.soundGravelFootstep, 3.0F, 5.0F, 0);
+            "rimmedDucat_2_topbottom.png", "rimmedDucat_2.png",
+            soundCoinsFootstep, 3.0F, 5.0F, 0);
+
     public static final Block layerRimmedDucat = BlockHelper.createBlock(MOD_ID, new BlockHoardLayerBase(903, Material.sand), "layer.rimmedDucat",
-            "rimmedDucat_1.png",
-            Block.soundGravelFootstep, 3.0F, 5.0F, 0).setNotInCreativeMenu();
+            "rimmedDucat_2_topbottom.png","rimmedDucat_2.png",
+            soundCoinsFootstep, 3.0F, 5.0F, 0).setNotInCreativeMenu();
 
 
 
