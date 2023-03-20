@@ -14,5 +14,12 @@ tile.hoard.block.rimmedDucat.name=Rimmed Ducat Block
 tile.hoard.block.rimmedDucat.desc=A block of 64 Rimmed Ducats.
 tile.hoard.layer.rimmedDucat.name=Rimmmed Ducat Layer
 tile.hoard.layer.rimmedDucat.desc=You shouldn't have this item.
-
+item.hoard.pile.glittermix.name=Glittermix Pile
+item.hoard.pile.glittermix.desc=A pile of assorted gold coins and gems. Can be placed in the world.
+item.hoard.glittermix.name=Glittermix
+item.hoard.glittermix.desc=Assorted gold coins and gems.
+tile.hoard.block.glittermix.name=Glittermix Block
+tile.hoard.block.glittermix.desc=A block of assorted gold coins and gems.
+tile.hoard.layer.glittermix.name=Glittermix Layer
+tile.hoard.layer.glittermix.desc=You shouldn't have this item.
 

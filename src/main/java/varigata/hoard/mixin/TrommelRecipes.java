@@ -175,5 +175,9 @@ public class TrommelRecipes extends TileEntity {
         WeightedRandomBag<WeightedRandomLootObject> lapis = new WeightedRandomBag<>();
         lapis.addEntry(new WeightedRandomLootObject(new ItemStack(Item.dye, 1, 4), 13), 100);
         sievableItems.put(Hoard.pileRimmedDucat.itemID, asList(gold, lapis));
+
+        WeightedRandomBag<WeightedRandomLootObject> diamond = new WeightedRandomBag<>();
+        diamond.addEntry(new WeightedRandomLootObject(new ItemStack(Item.diamond), 2), 100);
+        sievableItems.put(Hoard.pileGlittermix.itemID, asList(gold, diamond));
     }
 }
