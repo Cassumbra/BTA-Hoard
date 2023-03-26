@@ -4,7 +4,8 @@
     "package": "varigata.hoard.mixin",
     "compatibilityLevel": "JAVA_8",
     "mixins": [
-        "TrommelRecipes"
+        "TrommelRecipes",
+        "EntityTracker"
     ],
     "client": [
     ],

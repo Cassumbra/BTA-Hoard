@@ -55,6 +55,8 @@ public class Hoard implements ModInitializer {
     public void onInitialize() {
         LOGGER.info("Hoard initialized.");
 
+        EntityHelper.createEntity(EntityFallingLayer.class, new RenderFallingSand(), 60, "Falling Layer");
+
         setHoardProperties(pileSteeldollar, layerSteeldollar, blockSteeldollar);
         setHoardProperties(pileRimmedDucat, layerRimmedDucat, blockRimmedDucat);
         setHoardProperties(pileGlittermix, layerGlittermix, blockGlittermix);
