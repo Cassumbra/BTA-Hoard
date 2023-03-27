@@ -296,6 +296,7 @@ public abstract class LayerStepSoundFix{
                     // Modified code start
                     if (Block.getBlock(this.worldObj.getBlockId(l, j1 + 1, l1)) instanceof BlockLayerBase) {
                         stepsound = Block.getBlock(this.worldObj.getBlockId(l, j1 + 1, l1)).stepSound;
+                        // End modified code
                         this.worldObj.playSoundAtEntity((Entity)((Object)this), stepsound.func_1145_d(), stepsound.getVolume() * 0.15F, stepsound.getPitch());
                     } else if (!Block.blocksList[j3].blockMaterial.getIsLiquid()) {
                         this.worldObj.playSoundAtEntity((Entity)((Object)this), stepsound.func_1145_d(), stepsound.getVolume() * 0.15F, stepsound.getPitch());
