@@ -30,6 +30,7 @@ public class BlockHoardBase extends Block {
         if (canFallBelow(world, i, j - 1, k) && j >= 0) {
             byte byte0 = 32;
             if (!fallInstantly && world.checkChunksExist(i - byte0, j - byte0, k - byte0, i + byte0, j + byte0, k + byte0)) {
+                //this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
                 EntityFallingLayer entityfallinglayer = new EntityFallingLayer(world, (double)((float)i + 0.5F), (double)((float)j + 0.5F), (double)((float)k + 0.5F), this.layerID, 7);
                 world.entityJoinedWorld(entityfallinglayer);
             } else {
