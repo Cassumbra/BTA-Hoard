@@ -22,4 +22,12 @@ tile.hoard.block.glittermix.name=Glittermix Block
 tile.hoard.block.glittermix.desc=A block of assorted gold coins and gems.
 tile.hoard.layer.glittermix.name=Glittermix Layer
 tile.hoard.layer.glittermix.desc=You shouldn't have this item.
+item.hoard.pile.redQuartz.name=Red-Quartz Hybrid Pile
+item.hoard.pile.redQuartz.desc=A pile of Red-Quartz Hybrid crystals. Can be placed in the world.
+item.hoard.redQuartz.name=Red-Quartz Hybrid
+item.hoard.redQuartz.desc=A gold coin inlaid with lapis lazuli.
+tile.hoard.block.redQuartz.name=Red-Quartz Hybrid Block
+tile.hoard.block.redQuartz.desc=A block of 64 Red-Quartz Hybrid crystals.
+tile.hoard.layer.redQuartz.name=Red-Quartz Hybrid Layer
+tile.hoard.layer.redQuartz.desc=You shouldn't have this item.
 

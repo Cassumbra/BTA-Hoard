@@ -15,6 +15,7 @@ public class Hoard implements ModInitializer {
 
 
     public static final StepSound soundCoinsFootstep = new StepSound("gravel", 1.0F, 4.0F);
+    public static final StepSound soundCrystalFootstep = new StepSoundStone("stone", 1.0F, 4.0F);
 
 
     // Items
@@ -26,6 +27,10 @@ public class Hoard implements ModInitializer {
 
     public static final Item pileGlittermix = ItemHelper.createItem(MOD_ID, new ItemHoardPileBase(144), "pile.glittermix", "glittermix_pile.png");
     public static final Item glittermix = ItemHelper.createItem(MOD_ID, new Item(145), "glittermix", "glittermix.png");
+
+    public static final Item pileRedQuartz = ItemHelper.createItem(MOD_ID, new ItemHoardPileBase(146), "pile.redQuartz", "redQuartz_pile.png");
+
+    public static final Item redQuartz = ItemHelper.createItem(MOD_ID, new Item(147), "redQuartz", "redQuartz.png");
 
     // Blocks
     public static final Block blockSteeldollar = BlockHelper.createBlock(MOD_ID, new BlockHoardBase(900, Material.sand), "block.steeldollar",
@@ -49,6 +54,13 @@ public class Hoard implements ModInitializer {
             "glittermix_2.png",
             soundCoinsFootstep, 3.0F, 5.0F, 0).setNotInCreativeMenu();
 
+    public static final Block blockRedQuartz = BlockHelper.createBlock(MOD_ID, new BlockHoardBase(906, Material.sand), "block.redQuartz",
+            "quartzShardBase_side_1.png",
+            soundCrystalFootstep, 3.0F, 5.0F, 0);
+    public static final Block layerRedQuartz = BlockHelper.createBlock(MOD_ID, new BlockHoardLayerBase(907, Material.sand), "layer.redQuartz",
+            "quartzShardBase_side_1.png",
+            soundCrystalFootstep, 3.0F, 5.0F, 0).setNotInCreativeMenu();
+
 
 
     @Override
@@ -60,14 +72,17 @@ public class Hoard implements ModInitializer {
         setHoardProperties(pileSteeldollar, layerSteeldollar, blockSteeldollar);
         setHoardProperties(pileRimmedDucat, layerRimmedDucat, blockRimmedDucat);
         setHoardProperties(pileGlittermix, layerGlittermix, blockGlittermix);
+        setHoardProperties(pileRedQuartz, layerRedQuartz, blockRedQuartz);
 
-        RecipeHelper.Crafting.createRecipe(pileSteeldollar, 1, new Object[]{"###", "ABA", "###", 'A', Block.blockOlivine, 'B', Block.blockSteel});
+        RecipeHelper.Crafting.createRecipe(pileSteeldollar, 1, new Object[]{"AB#", "BBB", "#BA", 'A', Block.blockOlivine, 'B', Item.ingotSteel});
         RecipeHelper.Crafting.createRecipe(pileRimmedDucat, 1, new Object[]{"ABA", "BCB", "ABA", 'A', new ItemStack(Item.dye, 1, 4), 'B', Item.ingotGold, 'C', Block.blockLapis});
         RecipeHelper.Crafting.createRecipe(pileGlittermix, 1, new Object[]{"###", "ABA", "BBB", 'A', Item.diamond, 'B', Item.ingotGold});
+        RecipeHelper.Crafting.createRecipe(pileRedQuartz, 1, new Object[]{"ABB", "BBB", "BBA", 'A', Block.blockQuartz, 'B', Block.blockRedstone});
 
         generateHoardRecipes(steeldollar, pileSteeldollar, blockSteeldollar);
         generateHoardRecipes(rimmedDucat, pileRimmedDucat, blockRimmedDucat);
         generateHoardRecipes(glittermix, pileGlittermix, blockGlittermix);
+        generateHoardRecipes(redQuartz, pileRedQuartz, blockRedQuartz);
     }
 
     // TODO: These might be useful later when we have more hoard types.

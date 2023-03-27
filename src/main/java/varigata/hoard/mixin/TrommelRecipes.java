@@ -165,7 +165,7 @@ public class TrommelRecipes extends TileEntity {
 
     static {
         WeightedRandomBag<WeightedRandomLootObject> steel = new WeightedRandomBag<>();
-        steel.addEntry(new WeightedRandomLootObject(new ItemStack(Item.ingotSteel), 9), 100);
+        steel.addEntry(new WeightedRandomLootObject(new ItemStack(Item.ingotSteel), 5), 100);
         WeightedRandomBag<WeightedRandomLootObject> olivine = new WeightedRandomBag<>();
         olivine.addEntry(new WeightedRandomLootObject(new ItemStack(Item.olivine), 18), 100);
         sievableItems.put(Hoard.pileSteeldollar.itemID, asList(steel, olivine));
@@ -179,5 +179,11 @@ public class TrommelRecipes extends TileEntity {
         WeightedRandomBag<WeightedRandomLootObject> diamond = new WeightedRandomBag<>();
         diamond.addEntry(new WeightedRandomLootObject(new ItemStack(Item.diamond), 2), 100);
         sievableItems.put(Hoard.pileGlittermix.itemID, asList(gold, diamond));
+
+        WeightedRandomBag<WeightedRandomLootObject> redstone = new WeightedRandomBag<>();
+        redstone.addEntry(new WeightedRandomLootObject(new ItemStack(Item.dustRedstone), 63), 100);
+        WeightedRandomBag<WeightedRandomLootObject> quartz = new WeightedRandomBag<>();
+        quartz.addEntry(new WeightedRandomLootObject(new ItemStack(Item.quartz), 18), 100);
+        sievableItems.put(Hoard.pileRedQuartz.itemID, asList(redstone, quartz));
     }
 }
