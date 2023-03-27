@@ -74,10 +74,10 @@ public class Hoard implements ModInitializer {
         setHoardProperties(pileGlittermix, layerGlittermix, blockGlittermix);
         setHoardProperties(pileRedQuartz, layerRedQuartz, blockRedQuartz);
 
-        RecipeHelper.Crafting.createRecipe(pileSteeldollar, 1, new Object[]{"AB#", "BBB", "#BA", 'A', Block.blockOlivine, 'B', Item.ingotSteel});
+        RecipeHelper.Crafting.createRecipe(pileSteeldollar, 1, new Object[]{"ABC", "BBB", "CBA", 'A', Block.blockOlivine, 'B', Item.ingotSteel, 'C', Item.olivine});
         RecipeHelper.Crafting.createRecipe(pileRimmedDucat, 1, new Object[]{"ABA", "BCB", "ABA", 'A', new ItemStack(Item.dye, 1, 4), 'B', Item.ingotGold, 'C', Block.blockLapis});
         RecipeHelper.Crafting.createRecipe(pileGlittermix, 1, new Object[]{"###", "ABA", "BBB", 'A', Item.diamond, 'B', Item.ingotGold});
-        RecipeHelper.Crafting.createRecipe(pileRedQuartz, 1, new Object[]{"ABB", "BBB", "BBA", 'A', Block.blockQuartz, 'B', Block.blockRedstone});
+        RecipeHelper.Crafting.createRecipe(redQuartz, 4, new Object[]{"ABB", "BBB", "BBA", 'A', Block.blockQuartz, 'B', Block.blockRedstone});
 
         generateHoardRecipes(steeldollar, pileSteeldollar, blockSteeldollar);
         generateHoardRecipes(rimmedDucat, pileRimmedDucat, blockRimmedDucat);
