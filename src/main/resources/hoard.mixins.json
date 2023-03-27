@@ -1,14 +1,17 @@
 {
-  "required": true,
-  "minVersion": "0.8",
-  "package": "varigata.hoard.mixin",
-  "compatibilityLevel": "JAVA_8",
-  "mixins": [
-    "LayerStepSoundFix"
-  ],
-  "client": [
-  ],
-  "injectors": {
-    "defaultRequire": 1
+    "required": true,
+    "minVersion": "0.8",
+    "package": "varigata.hoard.mixin",
+    "compatibilityLevel": "JAVA_8",
+    "mixins": [
+        "TrommelRecipes",
+        "EntityTracker",
+        "hoard_NetClientHandler",
+		"LayerStepSoundFix"
+    ],
+    "client": [
+    ],
+    "injectors": {
+        "defaultRequire": 1
   }
 }
