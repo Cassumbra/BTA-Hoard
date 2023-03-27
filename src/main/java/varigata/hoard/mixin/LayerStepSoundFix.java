@@ -293,10 +293,9 @@ public abstract class LayerStepSoundFix{
                 if (this.distanceWalkedModified > (float)this.nextStepDistance && j3 > 0) {
                     ++this.nextStepDistance;
                     StepSound stepsound = Block.blocksList[j3].stepSound;
-                    //if (this.worldObj.getBlockId(l, j1 + 1, l1) == Block.layerSnow.blockID) {
-                    if (this.worldObj.getBlockTileEntity(l, j1 + 1, l1).getBlockType() instanceof BlockLayerBase) {
-                        //stepsound = Block.layerSnow.stepSound;
-                        stepsound = this.worldObj.getBlockTileEntity(l, j1 + 1, l1).getBlockType().stepSound;
+                    // Modified code start
+                    if (Block.getBlock(this.worldObj.getBlockId(l, j1 + 1, l1)) instanceof BlockLayerBase) {
+                        stepsound = Block.getBlock(this.worldObj.getBlockId(l, j1 + 1, l1)).stepSound;
                         this.worldObj.playSoundAtEntity((Entity)((Object)this), stepsound.func_1145_d(), stepsound.getVolume() * 0.15F, stepsound.getPitch());
                     } else if (!Block.blocksList[j3].blockMaterial.getIsLiquid()) {
                         this.worldObj.playSoundAtEntity((Entity)((Object)this), stepsound.func_1145_d(), stepsound.getVolume() * 0.15F, stepsound.getPitch());
@@ -344,7 +343,6 @@ public abstract class LayerStepSoundFix{
                 this.worldObj.playSoundAtEntity((Entity)((Object)this), "random.fizz", 0.7F, 1.6F + (this.rand.nextFloat() - this.rand.nextFloat()) * 0.4F);
                 this.fire = -this.fireResistance;
             }
-
         }
     }
 }
