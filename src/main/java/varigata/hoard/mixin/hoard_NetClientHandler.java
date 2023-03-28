@@ -34,7 +34,7 @@ public abstract class hoard_NetClientHandler {
         }
 
         if (blockid != 0) {
-            obj = new EntityFallingLayer(this.worldClient, d, d1, d2, blockid, 0);
+            obj = new EntityFallingLayer(this.worldClient, d, d1, d2, blockid, packet23vehiclespawn.field_28044_i);
 
             // Not sure if this is what is needed? We'll see if it fixes things or not.
             ((Entity)obj).serverPosX = packet23vehiclespawn.xPosition;

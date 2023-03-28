@@ -22,21 +22,27 @@ public class EntityTracker {
         if (this.trackedEntity instanceof EntityFallingLayer) {
             EntityFallingLayer entityfallinglayer = (EntityFallingLayer)this.trackedEntity;
 
+            Packet23VehicleSpawn packet = new Packet23VehicleSpawn(this.trackedEntity, 0);
+
             if (entityfallinglayer.blockID == Hoard.layerSteeldollar.blockID) {
-                cir.setReturnValue(new Packet23VehicleSpawn(this.trackedEntity, 80));
+                packet.type = 80;
             }
             else if (entityfallinglayer.blockID == Hoard.layerRimmedDucat.blockID) {
-                cir.setReturnValue(new Packet23VehicleSpawn(this.trackedEntity, 81));
+                packet.type = 81;
             }
             else if (entityfallinglayer.blockID == Hoard.layerGlittermix.blockID) {
-                cir.setReturnValue(new Packet23VehicleSpawn(this.trackedEntity, 82));
+                packet.type = 82;
             }
             else if (entityfallinglayer.blockID == Hoard.layerRedQuartz.blockID) {
-                cir.setReturnValue(new Packet23VehicleSpawn(this.trackedEntity, 83));
+                packet.type = 83;
             }
             else {
-                cir.setReturnValue(new Packet23VehicleSpawn(this.trackedEntity, 70));
+                packet.type = 84;
             }
+
+            packet.field_28044_i = entityfallinglayer.metadata;
+
+            cir.setReturnValue(packet);
             return;
         }
     }
